@@ -2,6 +2,7 @@ using UnityEngine;
 
 public class SpaceEntity : MonoBehaviour
 {
+    public int maxHp;
     public int hp;
     public string shield;
 

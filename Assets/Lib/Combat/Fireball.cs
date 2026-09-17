@@ -25,7 +25,6 @@ public class Fireball : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("What");
         var entity = other.GetComponent<SpaceEntity>();
         if (other.gameObject != this.origin && entity != null) {
             DoDamage(entity);
@@ -35,7 +34,6 @@ public class Fireball : MonoBehaviour
 
     void DoDamage(SpaceEntity entity)
     {
-        Debug.Log(entity.hp);
         if (entity.hp > 0) {
             entity.hp -= damage;
         }
