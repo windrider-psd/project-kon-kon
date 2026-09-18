@@ -4,10 +4,6 @@ using UnityEngine;
 public class SpaceShipMovement : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    [Header("Movement")]
-    public float acceleration = 5f;
-    public float maxSpeed = 10f;
-    public float deceleration = 2f;
 
     [Header("Rotation")]
     public float rotationSpeed = 180f;
@@ -18,25 +14,32 @@ public class SpaceShipMovement : MonoBehaviour
     public float thrustInput;
     public float rotationInput;
 
+
+    private SpaceEntity se;
+
     private void Awake()
     {
+        this.se = GetComponent<SpaceEntity>();
         rb = GetComponent<Rigidbody2D>();
     }
 
     private void FixedUpdate()
     {
+        var mass = se.Mass;
+        var power = se.engine.power - mass;
+ 
         // Forward/backward movement
         if (thrustInput > 0)
         {
             rb.AddForce(
-                transform.up * acceleration * thrustInput,
+                transform.up * se.engine.acceleration * thrustInput,
                 ForceMode2D.Force
             );
         }
         else if (thrustInput < 0)
         {
             rb.AddForce(
-                -transform.up * acceleration * -thrustInput * 0.5f,
+                -transform.up * se.engine.acceleration * -thrustInput * 0.5f,
                 ForceMode2D.Force
             );
         }
@@ -46,15 +49,15 @@ public class SpaceShipMovement : MonoBehaviour
             rb.linearVelocity = Vector2.MoveTowards(
                 rb.linearVelocity,
                 Vector2.zero,
-                deceleration * Time.fixedDeltaTime
+                se.engine.deceleration * Time.fixedDeltaTime
             );
         }
 
         // Maximum speed
-        if (rb.linearVelocity.magnitude > maxSpeed)
+        if (rb.linearVelocity.magnitude > power)
         {
             rb.linearVelocity =
-                rb.linearVelocity.normalized * maxSpeed;
+                rb.linearVelocity.normalized * power;
         }
 
         // Rotation

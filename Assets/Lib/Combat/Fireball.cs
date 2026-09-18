@@ -15,6 +15,7 @@ public class Fireball : MonoBehaviour
     void Start()
     {
         Destroy(gameObject, duration);
+        
     }
 
     // Update is called once per frame
@@ -27,21 +28,11 @@ public class Fireball : MonoBehaviour
     {
         var entity = other.GetComponent<SpaceEntity>();
         if (other.gameObject != this.origin && entity != null) {
-            DoDamage(entity);
+            FindAnyObjectByType<GameManager>().DoDamage(entity, damage);
             Destroy(gameObject);
         }
     }
 
-    void DoDamage(SpaceEntity entity)
-    {
-        if (entity.hp > 0) {
-            entity.hp -= damage;
-        }
-
-        if (entity.hp <= 0)
-        {
-            Destroy(entity.gameObject);
-        }
-    }
+    
 
 }
