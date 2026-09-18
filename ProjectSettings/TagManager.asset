@@ -3,7 +3,9 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Bullet
+  - FxTemporaire
   layers:
   - Default
   - TransparentFX
@@ -43,6 +45,12 @@ TagManager:
     locked: 0
   - name: mask
     uniqueID: 55551099
+    locked: 0
+  - name: Space Entities
+    uniqueID: 2647130645
+    locked: 0
+  - name: Turrets
+    uniqueID: 4139127803
     locked: 0
   m_RenderingLayers:
   - Default

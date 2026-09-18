@@ -8,5 +8,7 @@ public class Engine
     public int deceleration;
 
     public int size;
+
+    public GearSize gearSize;
 }
 

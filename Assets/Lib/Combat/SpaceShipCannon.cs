@@ -2,34 +2,18 @@ using UnityEngine;
 
 public class SpaceShipCannon : MonoBehaviour
 {
-    public GameObject fireball;
-
-    public float fireballSpeed;
-
-    public int damage;
-
-    public float duration;
-
-    public float cooldown;
-
-    public float currentCooldown;
-
-    public bool isOnCooldown = false;
-
-    public Sprite sprite;
+    public SpaceWeaponFireballLooks looks;
+    public SpaceWeaponSpecs specs;
 
     public Transform[] origin;
+
+    public float currentCooldown;
+    public bool isOnCooldown = false;
 
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        currentCooldown = cooldown;
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        currentCooldown = specs.cooldown;
     }
 
     public void Fire()
@@ -45,19 +29,22 @@ public class SpaceShipCannon : MonoBehaviour
 
         foreach (Transform t in origin)
         {
-            Quaternion rotation = Quaternion.LookRotation(t.forward, t.up);
+            Vector3 direction = t.up;
 
-            var go = Instantiate(fireball, t.position, rotation);
+            float angle = Mathf.Atan2(direction.y, direction.x) * Mathf.Rad2Deg;
+
+            Quaternion rotation = Quaternion.Euler(0, 0, angle);
+
+            var go = Instantiate(looks.fireball, t.position, rotation);
 
             var fb = go.GetComponent<Fireball>();
-            fb.origin = this.GetComponentInParent<SpaceEntity>().gameObject;
-            fb.direction = rotation;
-            fb.speed = fireballSpeed;
-            fb.damage = damage;
-            fb.duration = duration;
-            
+            fb.origin = GetComponentInParent<SpaceEntity>().gameObject;
+            fb.direction = direction;
+            fb.speed = specs.fireballSpeed;
+            fb.damage = specs.damage;
+            fb.duration = specs.duration;
 
-            go.GetComponent<SpriteRenderer>().sprite = sprite;
+            go.GetComponent<SpriteRenderer>().sprite = looks.sprite;
         }
         this.GetComponent<AudioSource>().Play();
     }
@@ -68,7 +55,7 @@ public class SpaceShipCannon : MonoBehaviour
         {
             currentCooldown += Time.fixedDeltaTime;
         }
-        if(currentCooldown >= cooldown)
+        if(currentCooldown >= specs.cooldown)
         {
             currentCooldown = 0;
             isOnCooldown = false;

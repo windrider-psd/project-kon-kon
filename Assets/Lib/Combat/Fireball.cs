@@ -3,7 +3,7 @@ using UnityEngine;
 public class Fireball : MonoBehaviour
 {
     public int damage;
-    public Quaternion direction;
+    public Vector3 direction;
 
     public float speed;
 
@@ -21,7 +21,7 @@ public class Fireball : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        transform.position += direction * Vector3.up * speed * Time.deltaTime;
+        transform.position += direction * speed * Time.deltaTime;
     }
 
     private void OnTriggerEnter2D(Collider2D other)

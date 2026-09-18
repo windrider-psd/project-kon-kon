@@ -45,8 +45,8 @@ public class GameManager : MonoBehaviour
     private void SpawnDebris(SpaceEntity entity)
     {
         var numberOfDebris = 3;
-        Instantiate(explosion, entity.transform.position, Quaternion.identity);
-
+        var exp = Instantiate(explosion, entity.transform.position, Quaternion.identity);
+        Destroy(exp, 3f);
         for (int i = 0; i < numberOfDebris; i++)
         {
             int index = random.Next(debrisSprites.Length);
