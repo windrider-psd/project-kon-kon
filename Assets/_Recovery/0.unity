@@ -225,7 +225,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbcbffd0e68ddf548b385c393ea17d23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceShipTurret
-  specs: {fileID: 11400000, guid: ec1828d4013f8f5458b768906cbc0649, type: 2}
+  looks: {fileID: 11400000, guid: 8c65c71a7a3a9ba4582a232ec0c85545, type: 2}
+  specs: {fileID: 0}
   currentCooldown: 0
   isOnCooldown: 0
 --- !u!82 &45840075
@@ -468,7 +469,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbcbffd0e68ddf548b385c393ea17d23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceShipTurret
-  specs: {fileID: 11400000, guid: a6da55f8a95eca947bea63167f897c07, type: 2}
+  looks: {fileID: 11400000, guid: 8c65c71a7a3a9ba4582a232ec0c85545, type: 2}
+  specs: {fileID: 0}
   currentCooldown: 0
   isOnCooldown: 0
 --- !u!212 &116059111
@@ -1503,7 +1505,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 0}
   m_Resource: {fileID: 8300000, guid: b94b978fd16f5c446b1447c1b70c7f25, type: 3}
-  m_PlayOnAwake: 0
+  m_PlayOnAwake: 1
   m_Volume: 0.067
   m_Pitch: 1
   Loop: 0
@@ -1600,7 +1602,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bbcbffd0e68ddf548b385c393ea17d23, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceShipTurret
-  specs: {fileID: 11400000, guid: ec1828d4013f8f5458b768906cbc0649, type: 2}
+  looks: {fileID: 11400000, guid: 8c65c71a7a3a9ba4582a232ec0c85545, type: 2}
+  specs: {fileID: 0}
   currentCooldown: 0
   isOnCooldown: 0
 --- !u!212 &1719132438
@@ -1828,10 +1831,6 @@ PrefabInstance:
       propertyPath: looks
       value: 
       objectReference: {fileID: 11400000, guid: 8c65c71a7a3a9ba4582a232ec0c85545, type: 2}
-    - target: {fileID: 3979534895788097248, guid: a3754366ad2a8fe4b8f3dcd0131fe2a6, type: 3}
-      propertyPath: specs
-      value: 
-      objectReference: {fileID: 11400000, guid: ec1828d4013f8f5458b768906cbc0649, type: 2}
     - target: {fileID: 3979534895788097248, guid: a3754366ad2a8fe4b8f3dcd0131fe2a6, type: 3}
       propertyPath: specs.damage
       value: 5
@@ -2073,10 +2072,6 @@ PrefabInstance:
       propertyPath: looks
       value: 
       objectReference: {fileID: 11400000, guid: 8c65c71a7a3a9ba4582a232ec0c85545, type: 2}
-    - target: {fileID: 5068174570404650816, guid: 235c560e2c7cad94da1659b9ced2fd5e, type: 3}
-      propertyPath: specs
-      value: 
-      objectReference: {fileID: 11400000, guid: a6da55f8a95eca947bea63167f897c07, type: 2}
     - target: {fileID: 5068174570404650816, guid: 235c560e2c7cad94da1659b9ced2fd5e, type: 3}
       propertyPath: specs.damage
       value: 5

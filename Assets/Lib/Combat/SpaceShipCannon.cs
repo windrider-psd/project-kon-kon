@@ -1,19 +1,25 @@
 using UnityEngine;
 
+[RequireComponent(typeof(AudioSource))]
 public class SpaceShipCannon : MonoBehaviour
 {
-    public SpaceWeaponFireballLooks looks;
-    public SpaceWeaponSpecs specs;
+    public SpaceWeaponCommonSpecs specs;
 
     public Transform[] origin;
 
     public float currentCooldown;
     public bool isOnCooldown = false;
 
+    private AudioSource audio;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         currentCooldown = specs.cooldown;
+        audio = GetComponent<AudioSource>();
+        audio.volume = specs.volume;
+        audio.pitch = specs.pitch;
+        audio.generator = specs.audio;
     }
 
     public void Fire()
@@ -35,7 +41,7 @@ public class SpaceShipCannon : MonoBehaviour
 
             Quaternion rotation = Quaternion.Euler(0, 0, angle);
 
-            var go = Instantiate(looks.fireball, t.position, rotation);
+            var go = Instantiate(specs.fireball, t.position, rotation);
 
             var fb = go.GetComponent<Fireball>();
             fb.origin = GetComponentInParent<SpaceEntity>().gameObject;
@@ -44,9 +50,9 @@ public class SpaceShipCannon : MonoBehaviour
             fb.damage = specs.damage;
             fb.duration = specs.duration;
 
-            go.GetComponent<SpriteRenderer>().sprite = looks.sprite;
+            go.GetComponent<SpriteRenderer>().sprite = specs.sprite;
         }
-        this.GetComponent<AudioSource>().Play();
+        audio.Play();
     }
 
     private void FixedUpdate()

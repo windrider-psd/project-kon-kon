@@ -2,16 +2,16 @@ using UnityEngine;
 using UnityEngine.U2D;
 using static UnityEngine.UI.Image;
 
+[RequireComponent(typeof(AudioSource))]
 public class SpaceShipTurret : MonoBehaviour
 {
-    public SpaceWeaponFireballLooks looks;
-    public SpaceWeaponSpecs specs;
+    public SpaceWeaponCommonSpecs specs;
     public float currentCooldown;
     public bool isOnCooldown = false;
 
     private AISpaceShipController controller;
-    
 
+    private AudioSource audio;
     private Transform Target
     {
         get
@@ -28,6 +28,11 @@ public class SpaceShipTurret : MonoBehaviour
     {
         controller = GetComponentInParent<AISpaceShipController>();
         currentCooldown = specs.cooldown;
+
+        audio = GetComponent<AudioSource>();
+        audio.volume = specs.volume;
+        audio.pitch = specs.pitch;
+        audio.generator = specs.audio;
     }
 
     private void Update()
@@ -50,7 +55,7 @@ public class SpaceShipTurret : MonoBehaviour
         Vector3 direction = (Target.position - transform.position).normalized;
 
         var go = Instantiate(
-            looks.fireball,
+            specs.fireball,
             transform.position,
             Quaternion.identity
         );
@@ -62,10 +67,11 @@ public class SpaceShipTurret : MonoBehaviour
         fb.speed = specs.fireballSpeed;
         fb.damage = specs.damage;
         fb.duration = specs.duration;
+        fb.hardTarget = Target.gameObject;
+        go.GetComponent<SpriteRenderer>().sprite = specs.sprite;
 
-        go.GetComponent<SpriteRenderer>().sprite = looks.sprite;
+        audio.Play();
 
-        GetComponent<AudioSource>().Play();
     }
 
     private void FixedUpdate()

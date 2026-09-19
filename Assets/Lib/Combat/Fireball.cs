@@ -11,6 +11,8 @@ public class Fireball : MonoBehaviour
 
     public float duration;
 
+    public GameObject hardTarget;
+
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -27,7 +29,8 @@ public class Fireball : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         var entity = other.GetComponent<SpaceEntity>();
-        if (other.gameObject != this.origin && entity != null) {
+        Debug.Log(entity.name);
+        if (other.gameObject != this.origin && entity != null && (hardTarget == null || hardTarget == other.gameObject)) {
             FindAnyObjectByType<GameManager>().DoDamage(entity, damage);
             Destroy(gameObject);
         }

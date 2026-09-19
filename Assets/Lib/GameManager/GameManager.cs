@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class GameManager : MonoBehaviour
 {
@@ -7,6 +8,10 @@ public class GameManager : MonoBehaviour
     public GameObject debris;
     public GameObject explosion;
     private System.Random random = new();
+
+    [Header("Asteroids")]
+    public Sprite[] asteroidSprites;
+    public GameObject asteroid;
 
     void Start()
     {
@@ -24,8 +29,6 @@ public class GameManager : MonoBehaviour
         SpawnDebris(entity);
         Destroy(entity.gameObject);
     }
-
-    
 
     public void DoDamage(SpaceEntity entity, float damage)
     {
@@ -64,5 +67,18 @@ public class GameManager : MonoBehaviour
 
             deb.GetComponent<SpriteRenderer>().sprite = debrisSprites[index];
         }
+    }
+
+
+    public void SpawnAsteroidWithinArea(BoxCollider2D box)
+    {
+
+        var randomPoint = new Vector2(
+            Random.Range(box.bounds.min.x, box.bounds.max.x),
+            Random.Range(box.bounds.min.y, box.bounds.max.y)
+        );
+
+        var go = Instantiate(asteroid, randomPoint, Quaternion.identity);
+        go.transform.parent = box.gameObject.transform;
     }
 }
