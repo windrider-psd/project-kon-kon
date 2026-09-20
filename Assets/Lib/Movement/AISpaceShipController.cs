@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class AISpaceShipController : MonoBehaviour
@@ -20,7 +21,9 @@ public class AISpaceShipController : MonoBehaviour
 
     [SerializeField]
     public AISpaceShipOrder currentOrder;
-   
+
+
+    public Action onOrderConcluded;
 
     private void Awake()
     {
@@ -33,6 +36,10 @@ public class AISpaceShipController : MonoBehaviour
     {
         if (target == null)
         {
+            if(currentOrder != AISpaceShipOrder.Idle)
+            {
+                onOrderConcluded?.Invoke();
+            }
             movement.thrustInput = 0f;
             movement.rotationInput = 0f;
             currentOrder = AISpaceShipOrder.Idle;
@@ -77,6 +84,7 @@ public class AISpaceShipController : MonoBehaviour
             movement.thrustInput = 0f;
             rb.linearVelocity = Vector2.zero;
             if (currentOrder == AISpaceShipOrder.Move) {
+                onOrderConcluded?.Invoke();
                 SetOrder(AISpaceShipOrder.Idle);
                 return;
             }

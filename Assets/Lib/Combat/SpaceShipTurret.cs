@@ -5,7 +5,7 @@ using static UnityEngine.UI.Image;
 [RequireComponent(typeof(AudioSource))]
 public class SpaceShipTurret : MonoBehaviour
 {
-    public SpaceWeaponCommonSpecs specs;
+    public SpaceCannon cannon;
     public float currentCooldown;
     public bool isOnCooldown = false;
 
@@ -27,12 +27,26 @@ public class SpaceShipTurret : MonoBehaviour
     void Start()
     {
         controller = GetComponentInParent<AISpaceShipController>();
-        currentCooldown = specs.cooldown;
+        
 
         audio = GetComponent<AudioSource>();
-        audio.volume = specs.volume;
-        audio.pitch = specs.pitch;
-        audio.generator = specs.audio;
+
+        SetCannon(cannon);
+    }
+
+    public void SetCannon(SpaceCannon c)
+    {
+        if (c == null)
+        {
+            this.cannon = null;
+            return;
+        }
+        audio = GetComponent<AudioSource>();
+        currentCooldown = c.cooldown;
+        audio.volume = c.volume;
+        audio.pitch = c.pitch;
+        audio.generator = c.audio;
+        this.cannon = c;
     }
 
     private void Update()
@@ -42,6 +56,10 @@ public class SpaceShipTurret : MonoBehaviour
 
     public void Fire()
     {
+        if (cannon == null)
+        {
+            return;
+        }
         if (!isOnCooldown && Target != null)
         {
 
@@ -55,7 +73,7 @@ public class SpaceShipTurret : MonoBehaviour
         Vector3 direction = (Target.position - transform.position).normalized;
 
         var go = Instantiate(
-            specs.fireball,
+            cannon.fireball,
             transform.position,
             Quaternion.identity
         );
@@ -64,11 +82,11 @@ public class SpaceShipTurret : MonoBehaviour
 
         fb.origin = GetComponentInParent<SpaceEntity>().gameObject;
         fb.direction = direction;
-        fb.speed = specs.fireballSpeed;
-        fb.damage = specs.damage;
-        fb.duration = specs.duration;
+        fb.speed = cannon.fireballSpeed;
+        fb.damage = cannon.damage;
+        fb.duration = cannon.duration;
         fb.hardTarget = Target.gameObject;
-        go.GetComponent<SpriteRenderer>().sprite = specs.sprite;
+        go.GetComponent<SpriteRenderer>().sprite = cannon.sprite;
 
         audio.Play();
 
@@ -80,7 +98,7 @@ public class SpaceShipTurret : MonoBehaviour
         {
             currentCooldown += Time.fixedDeltaTime;
         }
-        if (currentCooldown >= specs.cooldown)
+        if (cannon != null && currentCooldown >= cannon.cooldown)
         {
             currentCooldown = 0;
             isOnCooldown = false;

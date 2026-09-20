@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(AudioSource))]
 public class SpaceShipCannon : MonoBehaviour
 {
-    public SpaceWeaponCommonSpecs specs;
+    public SpaceCannon cannon;
 
     public Transform[] origin;
 
@@ -15,15 +15,31 @@ public class SpaceShipCannon : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
-        currentCooldown = specs.cooldown;
         audio = GetComponent<AudioSource>();
-        audio.volume = specs.volume;
-        audio.pitch = specs.pitch;
-        audio.generator = specs.audio;
+        SetCannon(cannon);
+    }
+
+    public void SetCannon(SpaceCannon c)
+    {
+        if(c == null)
+        {
+            this.cannon = null;
+            return;
+        }
+        var audio = GetComponent<AudioSource>();
+        currentCooldown = c.cooldown;
+        audio.volume = c.volume;
+        audio.pitch = c.pitch;
+        audio.generator = c.audio;
+        this.cannon = c;
     }
 
     public void Fire()
     {
+        if (cannon == null)
+        {
+            return;
+        }
         if (!isOnCooldown) {
             InitiateFireball();
             isOnCooldown = true;
@@ -32,7 +48,7 @@ public class SpaceShipCannon : MonoBehaviour
 
     private void InitiateFireball()
     {
-
+        
         foreach (Transform t in origin)
         {
             Vector3 direction = t.up;
@@ -41,16 +57,16 @@ public class SpaceShipCannon : MonoBehaviour
 
             Quaternion rotation = Quaternion.Euler(0, 0, angle);
 
-            var go = Instantiate(specs.fireball, t.position, rotation);
+            var go = Instantiate(cannon.fireball, t.position, rotation);
 
             var fb = go.GetComponent<Fireball>();
             fb.origin = GetComponentInParent<SpaceEntity>().gameObject;
             fb.direction = direction;
-            fb.speed = specs.fireballSpeed;
-            fb.damage = specs.damage;
-            fb.duration = specs.duration;
+            fb.speed = cannon.fireballSpeed;
+            fb.damage = cannon.damage;
+            fb.duration = cannon.duration;
 
-            go.GetComponent<SpriteRenderer>().sprite = specs.sprite;
+            go.GetComponent<SpriteRenderer>().sprite = cannon.sprite;
         }
         audio.Play();
     }
@@ -61,7 +77,7 @@ public class SpaceShipCannon : MonoBehaviour
         {
             currentCooldown += Time.fixedDeltaTime;
         }
-        if(currentCooldown >= specs.cooldown)
+        if(cannon != null && currentCooldown >= cannon.cooldown)
         {
             currentCooldown = 0;
             isOnCooldown = false;

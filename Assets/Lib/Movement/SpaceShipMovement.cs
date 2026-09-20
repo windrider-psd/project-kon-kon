@@ -5,9 +5,6 @@ public class SpaceShipMovement : MonoBehaviour
 {
     // Start is called once before the first execution of Update after the MonoBehaviour is created
 
-    [Header("Rotation")]
-    public float rotationSpeed = 180f;
-
     private Rigidbody2D rb;
 
     // Input provided by the controller
@@ -25,8 +22,14 @@ public class SpaceShipMovement : MonoBehaviour
 
     private void FixedUpdate()
     {
+        if(se.engine == null)
+        {
+            thrustInput = 0;
+            rotationInput = 0;
+            return;
+        }
         var mass = se.Mass;
-        var power = se.engine.power - mass;
+        var power = this.calculateRealPower(se.engine.power, mass);
  
         // Forward/backward movement
         if (thrustInput > 0)
@@ -63,7 +66,12 @@ public class SpaceShipMovement : MonoBehaviour
         // Rotation
         rb.MoveRotation(
             rb.rotation -
-            rotationInput * rotationSpeed * Time.fixedDeltaTime
+            rotationInput * se.baseSpaceEntity.rotationSpeed * Time.fixedDeltaTime
         );
+    }
+
+    private float calculateRealPower(float power, float mass) {
+        var points = power - mass;
+        return points * 0.25f;
     }
 }

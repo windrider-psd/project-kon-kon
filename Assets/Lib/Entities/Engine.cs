@@ -1,7 +1,10 @@
 ﻿
-[System.Serializable]
-public class Engine
+
+using UnityEngine;
+[CreateAssetMenu(menuName = "Gear/Engine")]
+public class Engine : ScriptableObject
 {
+    public string engineName;
     public int power;
     public int acceleration;
 
@@ -10,5 +13,7 @@ public class Engine
     public int size;
 
     public GearSize gearSize;
+
+    public EngineClassId id;
 }
 

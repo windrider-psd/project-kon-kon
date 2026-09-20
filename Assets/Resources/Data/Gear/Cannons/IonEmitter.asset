@@ -10,15 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ddae7271e94d26846aa818065dab9e5e, type: 3}
-  m_Name: PlasmaThrower
+  m_Name: IonEmitter
   m_EditorClassIdentifier: Assembly-CSharp::SpaceWeaponCommonSpecs
   weaponName: Ion Emitter
   fireballSpeed: 10
-  damage: 10
-  duration: 5
-  cooldown: 0.5
+  damage: 4
+  duration: 3
+  cooldown: 0.2
   audio: {fileID: 8300000, guid: b94b978fd16f5c446b1447c1b70c7f25, type: 3}
-  pitch: 1
+  pitch: 1.2
   volume: 0.05
   fireball: {fileID: 3606162954090801139, guid: 1a4017a713298b042a5b190a59c3e4ad, type: 3}
-  sprite: {fileID: 21300014, guid: 8aeb9e233fbb8f14db39770841b78b94, type: 3}
+  sprite: {fileID: 21300026, guid: 8aeb9e233fbb8f14db39770841b78b94, type: 3}
+  size: 0
+  fitsOnTurret: 1
+  fitsOnCannon: 1

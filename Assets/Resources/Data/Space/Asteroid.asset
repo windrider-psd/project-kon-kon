@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e9982185f69161409a48e073f65fa2c, type: 3}
+  m_Name: Asteroid
+  m_EditorClassIdentifier: Assembly-CSharp::BaseSpaceEntity
+  baseGameObject: {fileID: 2821455743302804283, guid: 54c8b7451c62bd543810cf5ffdba1720, type: 3}
+  entityClassName: Asteroid
+  rotationSpeed: 590
+  maxHp: 1
+  baseMass: 1
+  type: 2
+  gearSize: 0
+  shieldSlots: 0
+  cannonSlots: 0
+  turrentSlots: 0

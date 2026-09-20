@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ddae7271e94d26846aa818065dab9e5e, type: 3}
+  m_Name: PlasmaThrowerM
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceWeaponCommonSpecs
+  id: 2
+  weaponName: Plasma Thrower M
+  fireballSpeed: 7
+  damage: 30
+  duration: 3
+  cooldown: 1.5
+  audio: {fileID: 8300000, guid: b94b978fd16f5c446b1447c1b70c7f25, type: 3}
+  pitch: 1
+  volume: 0.05
+  fireball: {fileID: 3606162954090801139, guid: 1a4017a713298b042a5b190a59c3e4ad, type: 3}
+  sprite: {fileID: 21300014, guid: 8aeb9e233fbb8f14db39770841b78b94, type: 3}
+  size: 1
+  fitsOnTurret: 0
+  fitsOnCannon: 1

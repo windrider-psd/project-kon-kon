@@ -14,9 +14,17 @@ public class CameraFollowPlayer : MonoBehaviour
 
     private Camera cam;
 
+    private GameDatabase database;
     void Start()
     {
+        database = FindAnyObjectByType<GameDatabase>();
+        database.onPlayerChanged += this.ChangePlayer;
         cam = GetComponent<Camera>();
+    }
+
+    private void ChangePlayer()
+    {
+        this.target = database.GetPlayer().transform;
     }
 
     void LateUpdate()

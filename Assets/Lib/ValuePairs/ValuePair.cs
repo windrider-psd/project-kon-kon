@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Assets.Lib.Utils
+namespace Assets.Lib.ValuePairs
 {
     [System.Serializable]
     public struct ValuePair

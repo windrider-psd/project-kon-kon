@@ -1,0 +1,28 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3e9982185f69161409a48e073f65fa2c, type: 3}
+  m_Name: Small Fighter
+  m_EditorClassIdentifier: Assembly-CSharp::BaseSpaceEntity
+  entityClassName: Small Fighter
+  rotationSpeed: 135
+  maxHp: 90
+  baseMass: 18
+  classId: 1
+  type: 0
+  gearSize: 0
+  shieldSlots: 3
+  cannonSlots: 1
+  turrentSlots: 0
+  sprite: {fileID: 0}
+  objectScale: 0
+  canvasScale: 0
+  sliderPosition: 0

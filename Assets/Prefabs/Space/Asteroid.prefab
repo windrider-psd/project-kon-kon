@@ -122,17 +122,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb02499b1a2283c40b02103a6172b5ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceEntity
-  baseMass: 0
-  maxHp: 0
+  baseSpaceEntity: {fileID: 11400000, guid: 706d758a029402b46886b2bd3080fde5, type: 2}
   hp: 1
-  shield: 0
-  type: 2
-  engine:
-    power: 0
-    acceleration: 0
-    deceleration: 0
-    size: 0
-    gearSize: 0
+  engine: {fileID: 0}
   armor:
     mass: 0
     flatReduction: 0

@@ -1,34 +1,38 @@
-using Assets.Lib.Utils;
+using Assets.Lib.ValuePairs;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Globalization;
 using UnityEngine;
 
+
 public class SpaceEntity : MonoBehaviour
 {
-    public int baseMass;
-    
+
+    public BaseSpaceEntity baseSpaceEntity;
+
     public int Mass
     {
         get {
-            return baseMass + armor.mass;
+            return baseSpaceEntity.baseMass + armor.mass;
         }
 
     }
-    public int maxHp;
+
     public int hp;
-    public int shield;
-
-    
-  
-
-    public SpaceEntityType type;
-
 
     public Engine engine;
     public Armor armor;
 
+    public SpaceShipCannon[] cannons;
+
+    public SpaceShipTurret[] turrets;
+
     public int maxCargoSpace;
+
+    public void Start()
+    {
+        hp = baseSpaceEntity.maxHp;
+    }
 
     public int CargoSpace {  
         get
@@ -44,23 +48,5 @@ public class SpaceEntity : MonoBehaviour
 
 
     public ValuePair[] inventory;
-
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
-
-    
-
-    private void OnDestroy()
-    {
-        
-    }
 
 }
