@@ -12,13 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3e9982185f69161409a48e073f65fa2c, type: 3}
   m_Name: TradeStation
   m_EditorClassIdentifier: Assembly-CSharp::BaseSpaceEntity
-  entityClassName: 
+  entityClassName: Trade Station
   rotationSpeed: 0
   maxHp: 0
   baseMass: 0
-  classId: 0
-  type: 0
-  gearSize: 0
+  classId: 7
+  type: 1
+  gearSize: 2
   shieldSlots: 0
   cannonSlots: 0
   turrentSlots: 0

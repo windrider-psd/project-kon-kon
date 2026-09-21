@@ -730,12 +730,12 @@ GameObject:
   - component: {fileID: 157812198}
   - component: {fileID: 157812200}
   m_Layer: 0
-  m_Name: Station 1 (1)
+  m_Name: Desert Station
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &157812198
 SpriteRenderer:
   serializedVersion: 3
@@ -823,7 +823,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb02499b1a2283c40b02103a6172b5ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceEntity
-  baseSpaceEntity: {fileID: 0}
+  baseSpaceEntity: {fileID: 11400000, guid: 05b40d12bca63704b88940fdc4703dfe, type: 2}
   hp: 1000
   engine: {fileID: 0}
   armor:
@@ -970,13 +970,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eec107a7eabb3474181e0d8a72d8b947, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::AISpaceShipController
-  target: {fileID: 0}
-  desiredDistance: 2.87
   slowDownDistance: 10
   turnDeadZone: 5
   turnBeforeMovingAngle: 10
   stopThreshold: 1.5
-  currentOrder: 0
+  isStopping: 1
 --- !u!114 &365596616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1484,12 +1482,12 @@ GameObject:
   - component: {fileID: 786677680}
   - component: {fileID: 786677682}
   m_Layer: 0
-  m_Name: Station 1
+  m_Name: Asteroid Station
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!212 &786677680
 SpriteRenderer:
   serializedVersion: 3
@@ -1577,7 +1575,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: bb02499b1a2283c40b02103a6172b5ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::SpaceEntity
-  baseSpaceEntity: {fileID: 0}
+  baseSpaceEntity: {fileID: 11400000, guid: 05b40d12bca63704b88940fdc4703dfe, type: 2}
   hp: 1000
   engine: {fileID: 0}
   armor:
@@ -1927,6 +1925,7 @@ GameObject:
   - component: {fileID: 1122913219}
   - component: {fileID: 1122913218}
   - component: {fileID: 1122913220}
+  - component: {fileID: 1122913221}
   m_Layer: 0
   m_Name: Station 2
   m_TagString: Untagged
@@ -2023,6 +2022,29 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::AutoRotate
   rotationRate: 20
   randomOffset: 0
+--- !u!114 &1122913221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1122913217}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bb02499b1a2283c40b02103a6172b5ad, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::SpaceEntity
+  baseSpaceEntity: {fileID: 11400000, guid: 05b40d12bca63704b88940fdc4703dfe, type: 2}
+  hp: 0
+  engine: {fileID: 0}
+  armor:
+    mass: 0
+    flatReduction: 0
+    percentageReduction: 0
+  cannons: []
+  turrets: []
+  maxCargoSpace: 0
+  inventory: []
 --- !u!1 &1125968515
 GameObject:
   m_ObjectHideFlags: 0
@@ -2054,11 +2076,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShipSpawner
   id: 3
-  isAi: 1
   spawnSettings:
     engine: 0
-    cannons: 01000000i
-    turrents: 01000000i
+    cannons: 02000000i
+    turrents: 02000000i
+    majorAiOrderType: 1
+  isAi: 1
 --- !u!212 &1125968517
 SpriteRenderer:
   serializedVersion: 3
@@ -2548,11 +2571,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::ShipSpawner
   id: 3
-  isAi: 0
   spawnSettings:
     engine: 0
-    cannons: 01000000i
+    cannons: 03000000i
     turrents: 
+    majorAiOrderType: 0
+  isAi: 0
 --- !u!212 &1492568530
 SpriteRenderer:
   serializedVersion: 3

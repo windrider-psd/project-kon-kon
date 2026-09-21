@@ -12,8 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ddae7271e94d26846aa818065dab9e5e, type: 3}
   m_Name: PlasmaThrowerM
   m_EditorClassIdentifier: Assembly-CSharp::SpaceWeaponCommonSpecs
-  id: 2
-  weaponName: Plasma Thrower M
+  id: 4
+  gearName: 
+  gearSize: 0
+  size: 1
+  slot: 0
   fireballSpeed: 7
   damage: 30
   duration: 3
@@ -23,6 +26,5 @@ MonoBehaviour:
   volume: 0.05
   fireball: {fileID: 3606162954090801139, guid: 1a4017a713298b042a5b190a59c3e4ad, type: 3}
   sprite: {fileID: 21300014, guid: 8aeb9e233fbb8f14db39770841b78b94, type: 3}
-  size: 1
   fitsOnTurret: 0
   fitsOnCannon: 1
