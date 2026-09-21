@@ -5,6 +5,6 @@ using System.Text;
 
 public enum AIAgentBehaviour
 {
-    Trader, Military, Pirate
+    Demo, Trader, Military, Pirate
 }
 

@@ -118,6 +118,8 @@ public class GameManager : MonoBehaviour
         if (isAI)
         {
             go.AddComponent<AISpaceShipController>();
+            var agent = go.AddComponent<AIAgent>();
+            agent.SetMajorOrder(settings.majorAiOrderType);
         }
         else
         {
@@ -138,8 +140,16 @@ public class GameManager : MonoBehaviour
             return null;
         }  
     }
-    
 
+
+
+    public SpaceEntity FindRandomStationDestination(SpaceEntity agent)
+    {
+
+        var stations = this.FindStationsInSector(agent);
+        SpaceEntity destination = stations[random.Next(stations.Length)];
+        return destination;
+    }
 
     public SpaceEntity FindRandomStationDestination(SpaceEntity agent, SpaceEntity currentLocation)
     {
@@ -149,14 +159,22 @@ public class GameManager : MonoBehaviour
         do
         {
             destination = stations[random.Next(stations.Length)];
-        } while (destination != currentLocation);
+        } while (destination == currentLocation);
 
         return destination;
     }
 
     private SpaceEntity[] FindStationsInSector(SpaceEntity entity)
     {
-        var stations = FindObjectsByType<SpaceEntity>();
-        return stations;
+        var entities = FindObjectsByType<SpaceEntity>();
+        List<SpaceEntity> list = new List<SpaceEntity>();
+        foreach (SpaceEntity e in entities)
+        {
+            if(e.baseSpaceEntity.type == SpaceEntityType.Station)
+            {
+                list.Add(e); ;
+            }
+        }
+        return list.ToArray();
     }
 }

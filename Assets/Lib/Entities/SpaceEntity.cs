@@ -31,6 +31,11 @@ public class SpaceEntity : MonoBehaviour
 
     public void Start()
     {
+        if (baseSpaceEntity == null)
+        {
+            hp = 1;
+            return;
+        }
         hp = baseSpaceEntity.maxHp;
     }
 

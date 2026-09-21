@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Text;
 using UnityEngine;
 
-[CreateAssetMenu(menuName = "Combat/SpaceWeaponCommonSpecs")]
-public class SpaceCannon : ScriptableObject
+[CreateAssetMenu(menuName = "Gear/Cannon")]
+public class SpaceCannon : Gear
 {
     [Header("Specs")]
-    public SpaceCannonClassId id;
-    public string weaponName;
     public float fireballSpeed;
 
     public int damage;
@@ -27,7 +25,6 @@ public class SpaceCannon : ScriptableObject
     public Sprite sprite;
 
     [Header("Compatibility")]
-    public GearSize size;
     public bool fitsOnTurret;
     public bool fitsOnCannon;
 }

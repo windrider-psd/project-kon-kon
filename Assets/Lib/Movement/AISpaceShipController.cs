@@ -3,10 +3,7 @@ using UnityEngine;
 
 public class AISpaceShipController : MonoBehaviour
 {
-    public Transform target;
-
     [Header("AI Settings")]
-    public float desiredDistance = 5f;
     public float slowDownDistance = 10f;
     public float turnDeadZone = 5f;
     public float turnBeforeMovingAngle = 30f;
@@ -16,22 +13,97 @@ public class AISpaceShipController : MonoBehaviour
 
     private SpaceShipMovement movement;
     private Rigidbody2D rb;
-
+    [SerializeField]
     private bool isStopping = true;
 
-    [SerializeField]
-    public AISpaceShipOrder currentOrder;
-
-
-    public Action onOrderConcluded;
-
-    private void Awake()
+    private void Start()
     {
         movement = GetComponent<SpaceShipMovement>();
         rb = GetComponent<Rigidbody2D>();
     }
 
 
+    public bool MoveToLocation(Transform t, float desiredDistance)
+    {
+        if (t == null)
+        {
+            movement.thrustInput = 0f;
+            movement.rotationInput = 0f;
+            return true;
+        }
+
+        Vector2 toTarget = t.position - transform.position;
+        float distance = toTarget.magnitude;
+
+        Vector2 directionToTarget = toTarget.normalized;
+
+        float angle = Vector2.SignedAngle(
+            transform.up,
+            directionToTarget
+        );
+
+        // Rotate toward target
+        if (angle > turnDeadZone)
+        {
+            movement.rotationInput = -1f;
+        }
+        else if (angle < -turnDeadZone)
+        {
+            movement.rotationInput = 1f;
+        }
+        else
+        {
+            movement.rotationInput = 0f;
+            /*
+            if (currentOrder == AISpaceShipOrder.Kill)
+            {
+                var comps = GetComponentsInChildren<SpaceShipCannon>();
+                foreach (SpaceShipCannon comp in comps)
+                {
+                    comp.Fire();
+                }
+            }*/
+        }
+
+        // Already close enough
+        if (distance <= desiredDistance)
+        {
+            movement.thrustInput = 0f;
+            rb.linearVelocity = Vector2.zero;
+            isStopping = true;
+            return true;
+        }
+
+        // STOPPING STATE
+        if (isStopping)
+        {
+            movement.thrustInput = 0f;
+
+            // Wait until the ship has completely stopped
+            if (rb.linearVelocity.magnitude <= stopThreshold)
+            {
+                rb.linearVelocity = Vector2.zero;
+                isStopping = false;
+            }
+        }
+
+        // If we're badly misaligned, start stopping again
+        if (Mathf.Abs(angle) > turnBeforeMovingAngle)
+        {
+            isStopping = true;
+            movement.thrustInput = 0f;
+        }
+
+        // We're stopped and facing the target.
+        // Now we can move.
+        float distanceDifference = distance - desiredDistance;
+
+        float thrust = distanceDifference / slowDownDistance;
+
+        movement.thrustInput = Mathf.Clamp01(thrust);
+        return false;
+    }
+    /*
     private void Move()
     {
         if (target == null)
@@ -143,5 +215,5 @@ public class AISpaceShipController : MonoBehaviour
         this.currentOrder = order;
         this.target = target;
         isStopping = false;
-    }
+    }*/
 }

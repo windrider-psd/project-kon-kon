@@ -8,10 +8,10 @@ public class GameDatabase : MonoBehaviour
 
     private Engine[] engines;
 
-    private List<Tuple<EngineClassId, Engine>> enginesMap = new();
+    private List<Tuple<GearId, Engine>> enginesMap = new();
 
     private SpaceCannon[] cannons;
-    private List<Tuple<SpaceCannonClassId, SpaceCannon>> cannonsMap = new();
+    private List<Tuple<GearId, SpaceCannon>> cannonsMap = new();
 
     private GameObject player;
 
@@ -25,12 +25,12 @@ public class GameDatabase : MonoBehaviour
         LoadWeapons();
     }
     
-    public SpaceCannon FindCannon(SpaceCannonClassId id)
+    public SpaceCannon FindCannon(GearId id)
     {
         return cannons.First(e => e.id == id);
     }
 
-    public Engine FindEngine(EngineClassId id)
+    public Engine FindEngine(GearId id)
     {
         return engines.First(e => e.id == id);
     }

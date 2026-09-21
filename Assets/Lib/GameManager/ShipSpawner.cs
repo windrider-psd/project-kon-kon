@@ -13,9 +13,14 @@ public class ShipSpawner : MonoBehaviour
 
     private Vector3 editorScale;
 
-    public bool isAi = true;
+   
 
     public ShipSpawnSettings spawnSettings;
+
+
+    [Header("AI Settings")]
+    public bool isAi = true;
+
 
     void Start()
     {

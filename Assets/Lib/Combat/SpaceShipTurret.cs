@@ -1,6 +1,5 @@
 using UnityEngine;
 using UnityEngine.U2D;
-using static UnityEngine.UI.Image;
 
 [RequireComponent(typeof(AudioSource))]
 public class SpaceShipTurret : MonoBehaviour
@@ -16,11 +15,12 @@ public class SpaceShipTurret : MonoBehaviour
     {
         get
         {
-            if(controller == null || controller.currentOrder != AISpaceShipOrder.Kill || controller.target == null)
-            {
-                return null;
-            }
-            return controller.target.transform;
+            return null;
+            //if(controller == null || controller.currentOrder != AISpaceShipOrder.Kill || controller.target == null)
+           // {
+              //  return null;
+            //}
+            //return controller.target.transform;
         }
     }
 

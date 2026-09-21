@@ -6,7 +6,9 @@ using System.Text;
 [Serializable]
 public class ShipSpawnSettings
 {
-    public EngineClassId engine;
-    public SpaceCannonClassId[] cannons;
-    public SpaceCannonClassId[] turrents;
+    public GearId engine;
+    public GearId[] cannons;
+    public GearId[] turrents;
+
+    public MajorAiOrderType majorAiOrderType;
 }

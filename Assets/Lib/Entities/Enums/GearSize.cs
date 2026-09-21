@@ -5,6 +5,6 @@ using System.Text;
 
 public enum GearSize
 {
-   Small, Medium, Big
+   None, Small, Medium, Big
 }
 
