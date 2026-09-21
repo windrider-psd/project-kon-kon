@@ -1,9 +1,11 @@
+using Assets.Lib.Entities;
 using Assets.Lib.ValuePairs;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.SettingsManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.EventSystems.EventTrigger;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,6 +21,10 @@ public class GameManager : MonoBehaviour
 
     [Header("Ship Spawn")]
     public List<ShipClassIdValuePair> shipClassIdValuePairs;
+
+    [Header("Movement")]
+    public GameObject checkpoint;
+
 
     public GameDatabase database;
     private void Awake()
@@ -57,23 +63,23 @@ public class GameManager : MonoBehaviour
         var exp = Instantiate(explosion, entity.transform.position, Quaternion.identity);
         for (int i = 0; i < numberOfDebris; i++)
         {
-            int index = random.Next(debrisSprites.Length);
-            var deb = Instantiate(debris, entity.transform.position, Quaternion.identity);
-
-            var rb = deb.GetComponent<Rigidbody2D>();
-
-            float angle = UnityEngine.Random.Range(0f, 360f);
-            Vector2 direction = new Vector2(
-                Mathf.Cos(angle * Mathf.Deg2Rad),
-                Mathf.Sin(angle * Mathf.Deg2Rad)
-            );
-
-            rb.AddForce(direction * 1f, ForceMode2D.Impulse);
-
-            deb.GetComponent<SpriteRenderer>().sprite = debrisSprites[index];
+            SpawnSpaceDebris(entity, GoodsId.Scrap, 5);
         }
     }
+    public void SpawnSpaceDebris(SpaceEntity origin, GoodsId goodsId, int quantity)
+    {
+        int index = random.Next(debrisSprites.Length);
+        var deb = Instantiate(debris, origin.transform.position, Quaternion.identity);
+        deb.GetComponentInChildren<SpriteRenderer>().sprite = debrisSprites[index];
+        var sb = deb.GetComponent<SpaceDebris>();
+        sb.quantity = quantity;
+        sb.goodsId = goodsId;
+    }
 
+    public GameObject CreateCheckpoint(SpaceEntity ent, Vector3 position)
+    {
+        return Instantiate(checkpoint, position, Quaternion.identity);
+    }
 
     public void SpawnAsteroidWithinArea(BoxCollider2D box)
     {
@@ -141,6 +147,23 @@ public class GameManager : MonoBehaviour
         }  
     }
 
+
+    
+   public SpaceEntity[] FindNearbyEntities(SpaceEntity origin,SpaceEntityType type, float radius)
+    {
+        SpaceEntity[] entities = FindObjectsByType<SpaceEntity>();
+
+        float radiusSquared = radius * radius;
+        Vector2 originPosition = origin.transform.position;
+
+        return entities
+            .Where(entity =>
+                entity != origin &&
+                entity.baseSpaceEntity.type == type &&
+                ((Vector2)entity.transform.position - originPosition).sqrMagnitude <= radiusSquared
+            )
+            .ToArray();
+    }
 
 
     public SpaceEntity FindRandomStationDestination(SpaceEntity agent)

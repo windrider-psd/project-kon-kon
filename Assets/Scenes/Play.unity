@@ -832,6 +832,7 @@ MonoBehaviour:
     percentageReduction: 0
   cannons: []
   turrets: []
+  manager: {fileID: 0}
   maxCargoSpace: 0
   inventory: []
 --- !u!1 &365596611
@@ -956,6 +957,7 @@ MonoBehaviour:
     percentageReduction: 0
   cannons: []
   turrets: []
+  manager: {fileID: 0}
   maxCargoSpace: 0
   inventory: []
 --- !u!114 &365596615
@@ -1584,6 +1586,7 @@ MonoBehaviour:
     percentageReduction: 0
   cannons: []
   turrets: []
+  manager: {fileID: 0}
   maxCargoSpace: 0
   inventory: []
 --- !u!1 &828077002
@@ -2043,6 +2046,7 @@ MonoBehaviour:
     percentageReduction: 0
   cannons: []
   turrets: []
+  manager: {fileID: 0}
   maxCargoSpace: 0
   inventory: []
 --- !u!1 &1125968515
@@ -2646,7 +2650,7 @@ Transform:
   m_GameObject: {fileID: 1492568528}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 57.34, z: 0}
   m_LocalScale: {x: 0.16, y: 0.16, z: 0.16}
   m_ConstrainProportionsScale: 0
   m_Children: []

@@ -10,7 +10,7 @@ public class AsteroidAreaSpawner : MonoBehaviour
 
     private GameManager manager;
     private BoxCollider2D boxCollider;
-    private SpaceEntity[] Asteroids 
+    public SpaceEntity[] Asteroids 
     {
         get
         {

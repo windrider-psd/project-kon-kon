@@ -19,5 +19,14 @@ public class AIOrder{
             args = new object[] { location }
         };
     }
+
+    public static AIOrder CreateDestroyOrder(Transform target)
+    {
+        return new AIOrder()
+        {
+            type = AIOrderType.Destroy,
+            args = new object[] { target }
+        };
+    }
 }
 

@@ -29,7 +29,8 @@ public class Fireball : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         var entity = other.GetComponentInParent<SpaceEntity>();
-        if (other.transform.parent.gameObject != this.origin && entity != null && (hardTarget == null || hardTarget == other.gameObject)) {
+        
+        if (other.transform.parent.gameObject != this.origin && entity != null && (hardTarget == null || hardTarget == other.gameObject) && (entity.baseSpaceEntity.type != SpaceEntityType.Debris)) {
             FindAnyObjectByType<GameManager>().DoDamage(entity, damage);
             Destroy(gameObject);
         }

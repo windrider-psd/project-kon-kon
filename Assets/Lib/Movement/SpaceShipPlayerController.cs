@@ -6,10 +6,14 @@ public class SpaceShipPlayerController : MonoBehaviour
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private SpaceShipMovement movement;
     private SpaceShipCannon[] cannons;
+
+    private SpaceEntity ent;
     private void Awake()
     {
         movement = GetComponent<SpaceShipMovement>();
         cannons = GetComponentsInChildren<SpaceShipCannon>();
+
+        ent = GetComponent<SpaceEntity>();
     }
 
     private void Update()
@@ -48,6 +52,11 @@ public class SpaceShipPlayerController : MonoBehaviour
             {
                 space.Fire();
             }
+        }
+
+        if (Keyboard.current.xKey.isPressed)
+        {
+            ent.GripNearbyScrape();
         }
     }
 }

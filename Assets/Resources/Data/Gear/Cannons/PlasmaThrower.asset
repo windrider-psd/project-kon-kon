@@ -16,7 +16,7 @@ MonoBehaviour:
   gearName: 
   gearSize: 0
   size: 0
-  slot: 0
+  slot: 1
   fireballSpeed: 10
   damage: 10
   duration: 3

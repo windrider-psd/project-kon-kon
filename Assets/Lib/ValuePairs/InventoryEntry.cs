@@ -5,9 +5,9 @@ using System.Text;
 namespace Assets.Lib.ValuePairs
 {
     [System.Serializable]
-    public struct ValuePair
+    public struct InventoryEntry
     {
-        public string key;
+        public GoodsId key;
         public int value;
     }
 }

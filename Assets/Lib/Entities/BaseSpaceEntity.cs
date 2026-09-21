@@ -11,7 +11,7 @@ public class BaseSpaceEntity : ScriptableObject
     [Header("Stats")]
     public int maxHp;
     public int baseMass;
-
+    public int maxCargoSpace;
 
     [Header("Metadata")]
     public SpaceEntityClassId classId;

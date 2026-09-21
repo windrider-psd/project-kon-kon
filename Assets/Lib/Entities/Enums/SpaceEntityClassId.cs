@@ -11,7 +11,7 @@ public enum SpaceEntityClassId
     //Destroyers
     MilitaryDestroyer,
     //asteroid
-    Asteroids,
+    Asteroids, Debris,
     //stations
     DefensePlatform, TradeStation
 }

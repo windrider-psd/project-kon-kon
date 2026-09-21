@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Text;
 
 
-public enum GearSize
+public enum GoodsId
 {
-    Small, Medium, Big
+    Scrap
 }
 

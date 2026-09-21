@@ -5,10 +5,10 @@ using System.Text;
 
 public enum AIOrderType
 {
-    Move
+    Move, Destroy
 }
 
 public enum MajorAiOrderType
 {
-    None, MoveStations
+    None, MoveStations, FarmAsteroids
 }
