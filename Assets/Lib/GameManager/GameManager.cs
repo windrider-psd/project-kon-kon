@@ -29,9 +29,11 @@ public class GameManager : MonoBehaviour
 
 
     public GameDatabase database;
+    public FriendFoeManager friendFoeManager;
     private void Awake()
     {
         database = GetComponent<GameDatabase>();
+        friendFoeManager = GetComponent<FriendFoeManager>();
     }
 
     void Start()
@@ -99,6 +101,7 @@ public class GameManager : MonoBehaviour
         //var go = Instantiate(v.value, position, Quaternion.identity);
         //var ent = go.GetComponent<SpaceEntity>();
         var ent = SpawnSpaceEntity(v.value, position, SectorId.Ayumu);
+        ent.factionId = settings.faction;
         var go = ent.gameObject;
 
         for(int i = 0; i < settings.turrents.Length; i++)
@@ -216,5 +219,27 @@ public class GameManager : MonoBehaviour
         Guid myGuid = Guid.NewGuid();
         // 3. Convert to a string if needed
         return myGuid.ToString();
+    }
+
+    public SpaceEntity FindNearbyEnemy(SpaceEntity entity)
+    {
+      
+    
+        var nearbyShips = FindNearbyEntities(entity, SpaceEntityType.Ship, 10f);
+
+        SpaceEntity enemy = null;
+        foreach (var nearby in nearbyShips)
+        {
+            var rel = friendFoeManager.GetFriendliness(entity, nearby);
+
+            if (rel == FactionFriendliness.Enemy)
+            {
+
+                enemy = nearby;
+                break;
+            }
+        }
+        return enemy;
+    
     }
 }

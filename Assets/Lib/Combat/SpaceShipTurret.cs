@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityEngine.U2D;
+using static UnityEngine.EventSystems.EventTrigger;
 
 [RequireComponent(typeof(AudioSource))]
 public class SpaceShipTurret : MonoBehaviour
@@ -11,26 +12,34 @@ public class SpaceShipTurret : MonoBehaviour
     private AISpaceShipController controller;
 
     private AudioSource audio;
+    private SpaceEntity entity;
     private Transform Target
     {
         get
         {
+            
+            var enemy = manager.FindNearbyEnemy(entity);
+            if (enemy != null)
+            {
+                return enemy.transform;
+            }
             return null;
             //if(controller == null || controller.currentOrder != AISpaceShipOrder.Kill || controller.target == null)
-           // {
-              //  return null;
+            // {
+            //  return null;
             //}
             //return controller.target.transform;
         }
     }
+    public GameManager manager;
 
     void Start()
     {
         controller = GetComponentInParent<AISpaceShipController>();
-        
+        manager = FindAnyObjectByType<GameManager>();
 
         audio = GetComponent<AudioSource>();
-
+        entity = GetComponentInParent<SpaceEntity>();
         SetCannon(cannon);
     }
 
@@ -85,7 +94,7 @@ public class SpaceShipTurret : MonoBehaviour
         fb.speed = cannon.fireballSpeed;
         fb.damage = cannon.damage;
         fb.duration = cannon.duration;
-        fb.hardTarget = Target.gameObject;
+        //fb.hardTarget = Target.gameObject;
         go.GetComponent<SpriteRenderer>().sprite = cannon.sprite;
 
         audio.Play();

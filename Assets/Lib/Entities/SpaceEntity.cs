@@ -19,6 +19,13 @@ public class SpaceEntity : MonoBehaviour
 
     }
 
+    public SpaceSector CurrentSector{
+        get
+        {
+           return GetComponentInParent<SpaceSector>();
+        }
+    }
+
     public int hp;
 
     public Engine engine;
@@ -33,6 +40,7 @@ public class SpaceEntity : MonoBehaviour
     public string id;
 
     public Inventory inventory;
+    public FactionId factionId;
 
     public void Start()
     {

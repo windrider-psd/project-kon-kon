@@ -11,4 +11,6 @@ public class ShipSpawnSettings
     public GearId[] turrents;
 
     public MajorAiOrderType majorAiOrderType;
+
+    public FactionId faction;
 }

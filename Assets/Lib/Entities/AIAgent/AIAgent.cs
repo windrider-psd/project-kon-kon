@@ -76,6 +76,17 @@ public class AIAgent : MonoBehaviour
                 spawner = FindAnyObjectByType<AsteroidAreaSpawner>()
             };
         }
+        else if(MajorAiOrderType.Patrol == order)
+        {
+            this.majorExecutor = new ExecutePatrolOrder
+            {
+                controller = controller,
+                manager = manager,
+                entity = entity,
+                agent = this,
+                friendFoeManager = FindAnyObjectByType<FriendFoeManager>()
+            };
+        }
         this.majorOrder = order;
     }
 
@@ -117,7 +128,7 @@ public class AIAgent : MonoBehaviour
     {
         Transform location = currentOrder.args[0] as Transform;
 
-        var completed = controller.MoveToLocation(location, 2f);
+        var completed = controller.MoveToLocation(location, 2f, true);
         order.completed = completed;
         return completed;
         
@@ -133,7 +144,7 @@ public class AIAgent : MonoBehaviour
             return true;
         }
 
-        controller.MoveToLocation(location, 2f);
+        controller.MoveToLocation(location, 2f, false);
 
         if (IsLookingAtTheTarget(location))
         {
@@ -155,7 +166,7 @@ public class AIAgent : MonoBehaviour
             directionToTarget
         );
 
-        float turnDeadZone = 5f;
+        float turnDeadZone = 10f;
 
         return angle > turnDeadZone == false && angle < -turnDeadZone == false;
     }
@@ -307,6 +318,68 @@ public class AIAgent : MonoBehaviour
             }
 
 
+        }
+    }
+    private class ExecutePatrolOrder : IMajorOrderExecutor
+    {
+
+
+        public AISpaceShipController controller;
+
+        public GameManager manager;
+
+        public SpaceEntity entity;
+
+        public AIAgent agent;
+
+        public FriendFoeManager friendFoeManager;
+
+      
+        private AIOrder order;
+
+        private Timer timer;
+
+        //0 = looking; 1 = found and attacking;
+        private int stage = 0;
+        public void Execute()
+        {
+            if(stage == 0)
+            {
+                SpaceEntity enemy = manager.FindNearbyEnemy(entity);
+                
+                if(enemy != null)
+                {
+                    this.order = agent.CreateDestroy(enemy.transform);
+                    stage = 1;
+                }
+                else
+                {
+                    if (order == null)
+                    {
+                        
+                        this.order = agent.CreateMoveToLocation(
+                               manager.CreateCheckpoint(entity, entity.CurrentSector.GetRandomPointWithin()
+                           ).transform
+                        );
+                    }
+                    else if (order.completed == true)
+                    {
+                        {
+                            order = null;
+                        }
+                    }
+                }
+                
+            }
+            else if(stage == 1)
+            {
+                if(order.completed)
+                {
+                    stage = 0;
+                    order = null;
+                }
+            }
+            
         }
     }
 }

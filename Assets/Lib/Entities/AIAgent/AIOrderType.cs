@@ -10,5 +10,5 @@ public enum AIOrderType
 
 public enum MajorAiOrderType
 {
-    None, MoveStations, FarmAsteroids
+    None, MoveStations, FarmAsteroids, Patrol
 }

@@ -27,7 +27,7 @@ public class AISpaceShipController : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
     }
 
-    public bool MoveToLocation(Transform t, float desiredDistance)
+    public bool MoveToLocation(Transform t, float desiredDistance, bool stopAtDesiredDistance)
     {
         if (t == null)
         {
@@ -67,7 +67,7 @@ public class AISpaceShipController : MonoBehaviour
         // ALREADY AT TARGET
         // --------------------------------
 
-        if (distance <= desiredDistance)
+        if (stopAtDesiredDistance && distance <= desiredDistance)
         {
             movement.thrustInput = 0f;
             rb.linearVelocity = Vector2.zero;
@@ -137,7 +137,16 @@ public class AISpaceShipController : MonoBehaviour
 
         float distanceDifference = distance - desiredDistance;
 
-        float thrust = distanceDifference / slowDownDistance;
+
+        float thrust;
+        if (stopAtDesiredDistance)
+        {
+            thrust = distanceDifference / slowDownDistance;
+        }
+        else
+        {
+            thrust = 1;
+        }
 
         movement.thrustInput = Mathf.Clamp01(thrust);
 

@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3e9982185f69161409a48e073f65fa2c, type: 3}
-  m_Name: Burning Falcon
+  m_Name: King Crab
   m_EditorClassIdentifier: Assembly-CSharp::BaseSpaceEntity
-  entityClassName: Burning Falcon Freigther
-  rotationSpeed: 90
-  maxHp: 200
-  baseMass: 13
-  maxCargoSpace: 50
-  classId: 3
+  entityClassName: 
+  rotationSpeed: 150
+  maxHp: 150
+  baseMass: 7
+  maxCargoSpace: 30
+  classId: 4
   type: 0
   gearSize: 0
-  shieldSlots: 1
+  shieldSlots: 0
   cannonSlots: 1
-  turrentSlots: 1
-  sprite: {fileID: 6207587744881149377, guid: 231f50b6222d3cf4caf0a21f5eb055bc, type: 3}
-  objectScale: 0.15
-  canvasScale: 0.05
-  sliderPosition: -66
+  turrentSlots: 0
+  sprite: {fileID: 0}
+  objectScale: 0
+  canvasScale: 0
+  sliderPosition: 0

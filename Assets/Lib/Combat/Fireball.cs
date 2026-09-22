@@ -1,3 +1,4 @@
+using UnityEditor.Rendering;
 using UnityEngine;
 
 public class Fireball : MonoBehaviour
@@ -13,11 +14,13 @@ public class Fireball : MonoBehaviour
 
     public GameObject hardTarget;
 
+    private FriendFoeManager friendFoeManager;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
         Destroy(gameObject, duration);
-        
+        friendFoeManager = FindAnyObjectByType<FriendFoeManager>();
     }
 
     // Update is called once per frame
@@ -29,8 +32,19 @@ public class Fireball : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D other)
     {
         var entity = other.GetComponentInParent<SpaceEntity>();
-        
-        if (other.transform.parent.gameObject != this.origin && entity != null && (hardTarget == null || hardTarget == other.gameObject) && (entity.baseSpaceEntity.type != SpaceEntityType.Debris)) {
+        if(entity == null && other.transform.parent.gameObject != this.origin || origin == null)
+        {
+            return;
+        }
+        var validUniversalTarget = entity.baseSpaceEntity.type == SpaceEntityType.Debris
+            || entity.baseSpaceEntity.type == SpaceEntityType.Asteroid;
+        var rel = friendFoeManager.GetFriendliness(entity, this.origin.GetComponent<SpaceEntity>());
+
+        if (
+            (hardTarget == null || hardTarget == other.gameObject) 
+            && (entity.baseSpaceEntity.type != SpaceEntityType.Debris) 
+            && (validUniversalTarget || rel == FactionFriendliness.Enemy)
+        ) {
             FindAnyObjectByType<GameManager>().DoDamage(entity, damage);
             Destroy(gameObject);
         }

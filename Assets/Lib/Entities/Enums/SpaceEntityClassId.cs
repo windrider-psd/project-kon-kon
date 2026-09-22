@@ -6,7 +6,7 @@ using System.Text;
 public enum SpaceEntityClassId
 {
     //fighters
-    Nexsai, SmallFighter, BigFighter, BurningFalcon,
+    Nexsai, SmallFighter, BigFighter, BurningFalcon, KingCrab,
 
     //Destroyers
     MilitaryDestroyer,
