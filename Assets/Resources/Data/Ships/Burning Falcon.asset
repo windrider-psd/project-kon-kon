@@ -16,6 +16,7 @@ MonoBehaviour:
   rotationSpeed: 40
   maxHp: 200
   baseMass: 13
+  maxCargoSpace: 50
   classId: 3
   type: 0
   gearSize: 0
