@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using UnityEngine;
+using UnityEngine.UIElements;
 
 public class RandomUtils
 {
@@ -14,5 +15,13 @@ public class RandomUtils
         }
        var index =  random.Next(array.Length);
         return array[index];
+    }
+
+    public static Vector2 RandomPointWithinBoxCollider(BoxCollider2D box)
+    {
+        return new Vector2(
+            Random.Range(box.bounds.min.x, box.bounds.max.x),
+            Random.Range(box.bounds.min.y, box.bounds.max.y)
+        );
     }
 }

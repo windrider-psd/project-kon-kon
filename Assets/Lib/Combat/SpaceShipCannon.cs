@@ -84,5 +84,21 @@ public class SpaceShipCannon : MonoBehaviour
         }
     }
 
+    public bool IsInRange(Transform target)
+    {
+        if (cannon == null || target == null)
+            return false;
+
+        float range = cannon.fireballSpeed * cannon.duration;
+
+        Vector2 originPosition = origin != null && origin.Length > 0
+            ? origin[0].position
+            : transform.position;
+
+        Vector2 offset = (Vector2)target.position - originPosition;
+
+        return offset.sqrMagnitude <= range * range;
+    }
+
 
 }

@@ -1,10 +1,12 @@
 using Assets.Lib.Entities;
 using Assets.Lib.ValuePairs;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEditor.SettingsManagement;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.UIElements;
 using static UnityEngine.EventSystems.EventTrigger;
 
 public class GameManager : MonoBehaviour
@@ -84,13 +86,9 @@ public class GameManager : MonoBehaviour
     public void SpawnAsteroidWithinArea(BoxCollider2D box)
     {
 
-        var randomPoint = new Vector2(
-            Random.Range(box.bounds.min.x, box.bounds.max.x),
-            Random.Range(box.bounds.min.y, box.bounds.max.y)
-        );
-
-        var go = Instantiate(asteroid, randomPoint, Quaternion.identity);
-        go.transform.parent = box.gameObject.transform;
+        var randomPoint = RandomUtils.RandomPointWithinBoxCollider(box);
+        var ent = SpawnSpaceEntity(asteroid, randomPoint, SectorId.Ayumu);
+        ent.gameObject.transform.parent = box.gameObject.transform;
     }
 
 
@@ -98,9 +96,10 @@ public class GameManager : MonoBehaviour
     {
         var v = shipClassIdValuePairs.First(s => s.key == classId);
 
-        var go = Instantiate(v.value, position, Quaternion.identity);
-        var ent = go.GetComponent<SpaceEntity>();
- 
+        //var go = Instantiate(v.value, position, Quaternion.identity);
+        //var ent = go.GetComponent<SpaceEntity>();
+        var ent = SpawnSpaceEntity(v.value, position, SectorId.Ayumu);
+        var go = ent.gameObject;
 
         for(int i = 0; i < settings.turrents.Length; i++)
         {
@@ -132,6 +131,17 @@ public class GameManager : MonoBehaviour
             go.AddComponent<SpaceShipPlayerController>();
             database.SetPlayer(go);
         }
+    }
+
+    private SpaceEntity SpawnSpaceEntity(GameObject prefab, Vector2 position, SectorId sectorId)
+    {
+        var go = Instantiate(prefab, position, Quaternion.identity);
+        var ent = go.GetComponent<SpaceEntity>();
+        ent.id = CreateSpaceEntityId();
+        var sec = database.GetSector(sectorId);
+        go.transform.parent = sec.transform;
+        sec.AddSpaceEntity(ent);
+        return ent;
     }
 
     public GameObject GetShipGO(SpaceEntityClassId id)
@@ -199,5 +209,12 @@ public class GameManager : MonoBehaviour
             }
         }
         return list.ToArray();
+    }
+
+    private string CreateSpaceEntityId()
+    {
+        Guid myGuid = Guid.NewGuid();
+        // 3. Convert to a string if needed
+        return myGuid.ToString();
     }
 }

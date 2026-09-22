@@ -41,11 +41,12 @@ public class ObjectGrip : MonoBehaviour
             triggered = true;
             var entity = target.GetComponent<SpaceEntity>();
             var debris = GetComponent<SpaceDebris>();
-            if(entity != null && debris != null)
+            if(entity != null && debris != null && entity.inventory.CanAddToInventory(debris.goodsId, debris.quantity))
             {
-                entity.AddToInventory(debris.goodsId, debris.quantity);
+                entity.inventory.AddToInventory(debris.goodsId, debris.quantity);
+                Destroy(this.gameObject);
             }
-            Destroy(this.gameObject);
+            
         }
 
         if (triggered && stopOnTrigger)

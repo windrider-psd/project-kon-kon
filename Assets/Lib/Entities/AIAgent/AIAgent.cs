@@ -137,7 +137,7 @@ public class AIAgent : MonoBehaviour
 
         if (IsLookingAtTheTarget(location))
         {
-            entity.ShootCannons();
+            entity.ShootCannonsInRange(order.args[0] as Transform);
         }
         
         return false;
@@ -217,8 +217,7 @@ public class AIAgent : MonoBehaviour
     }
     private class ExecuteFarmAsteroidsOrder : IMajorOrderExecutor
     {
-        private SpaceEntity currentLocation;
-        private SpaceEntity destination;
+        
 
         public AISpaceShipController controller;
 
@@ -239,7 +238,6 @@ public class AIAgent : MonoBehaviour
         private Timer timer;
         public void Execute()
         {
-            Debug.Log(stage);
             if (stage == 0)
             {
                 var asteroids = spawner.Asteroids;
@@ -283,6 +281,27 @@ public class AIAgent : MonoBehaviour
                 timer.Update();
                 if (timer.Finished)
                 {
+                    if (!entity.inventory.IsInventoryNearFull())
+                    {
+                        stage = 0;
+                    }
+                    else
+                    {
+                        var destination = manager.FindRandomStationDestination(entity);
+                        order = agent.CreateMoveToLocation(destination.transform);
+
+                        stage = 5;
+                    }
+                    
+                }
+            }
+            if(stage == 5)
+            {
+                var reached = order.completed;
+
+                if (reached)
+                {
+                    entity.inventory.ClearInventory();
                     stage = 0;
                 }
             }

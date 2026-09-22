@@ -4,7 +4,7 @@ public class AISpaceShipController : MonoBehaviour
 {
     [Header("AI Settings")]
     public float slowDownDistance = 10f;
-    public float turnDeadZone = 5f;
+    public float turnDeadZone = 1f;
     public float turnBeforeMovingAngle = 30f;
 
     [Header("Orbit Detection")]

@@ -17,12 +17,31 @@ public class GameDatabase : MonoBehaviour
 
     public event Action onPlayerChanged;
 
+    private Dictionary<SectorId, SpaceSector> sectors = new();
 
 
     void Awake()
     {
         LoadEngines();
         LoadWeapons();
+        LoadSectors();
+    }
+
+
+    public SpaceSector GetSector(SectorId id)
+    {       
+        return sectors[id];
+    }
+    private void LoadSectors()
+    {
+       
+        var secs = FindObjectsByType<SpaceSector>();
+        
+        foreach (var s in secs)
+        {
+            sectors.Add(s.sectorId, s);
+        }
+        
     }
     
     public SpaceCannon FindCannon(GearId id)

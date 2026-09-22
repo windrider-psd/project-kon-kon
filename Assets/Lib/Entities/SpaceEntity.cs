@@ -30,10 +30,13 @@ public class SpaceEntity : MonoBehaviour
 
     public GameManager manager;
 
-    public int maxCargoSpace;
+    public string id;
+
+    public Inventory inventory;
 
     public void Start()
     {
+        
         manager = FindAnyObjectByType<GameManager>();
         if (baseSpaceEntity == null)
         {
@@ -41,24 +44,12 @@ public class SpaceEntity : MonoBehaviour
             return;
         }
         hp = baseSpaceEntity.maxHp;
-    }
-
-    public int CargoSpace {  
-        get
-        {
-            int val = engine.size;
-            foreach(InventoryEntry thing in inventory)
-            {
-                val += thing.value;
-            }
-            return val;
-        } 
+        inventory.maxCargoSpace = baseSpaceEntity.maxCargoSpace;
     }
 
     public void GripNearbyScrape()
     {
         var nearby = manager.FindNearbyEntities(this, SpaceEntityType.Debris, 10f);
-        Debug.Log(nearby.Length);
         foreach(SpaceEntity n in nearby)
         {
             var grip = n.GetOrAddComponent<ObjectGrip>();
@@ -67,38 +58,32 @@ public class SpaceEntity : MonoBehaviour
         }
     }
 
+    public void ShootCannonsInRange(Transform target)
+    {
+        var comps = GetComponentsInChildren<SpaceShipCannon>();
+        foreach (SpaceShipCannon comp in comps)
+        {
+            if (comp.IsInRange(target))
+            {
+                comp.Fire();
+            }
+            
+        }
+    }
+
     public void ShootCannons()
     {
         var comps = GetComponentsInChildren<SpaceShipCannon>();
         foreach (SpaceShipCannon comp in comps)
         {
+            
             comp.Fire();
         }
+
+
     }
 
 
-    public void AddToInventory(GoodsId goodsId, int quantity)
-    {
-        if (quantity <= 0)
-            return;
-
-        for (int i = 0; i < inventory.Length; i++)
-        {
-            if (inventory[i].key == goodsId)
-            {
-                inventory[i].value += quantity;
-                return;
-            }
-        }
-
-        Array.Resize(ref inventory, inventory.Length + 1);
-
-        inventory[inventory.Length - 1] = new InventoryEntry
-        {
-            key = goodsId,
-            value = quantity
-        };
-    }
-    public InventoryEntry[] inventory;
+    
 
 }
