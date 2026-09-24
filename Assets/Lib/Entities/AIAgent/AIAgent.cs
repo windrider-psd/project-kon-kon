@@ -200,12 +200,6 @@ public class AIAgent : MonoBehaviour
             orderToExecute = currentOrder;
             currentOrder.Execute();
         }
-        if(orderToExecute != null && entity.baseSpaceEntity.classId == SpaceEntityClassId.BurningFalcon)
-        {
-            
-            Debug.Log(orderToExecute.type);
-            
-        }
     }
 
     public bool IsLookingAtTheTarget(Transform target)

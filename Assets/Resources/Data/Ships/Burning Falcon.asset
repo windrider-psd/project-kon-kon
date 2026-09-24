@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BaseSpaceEntity
   entityClassName: Burning Falcon Freigther
   rotationSpeed: 90
-  maxHp: 200
+  maxHp: 500
   baseMass: 13
   maxCargoSpace: 50
   classId: 3
