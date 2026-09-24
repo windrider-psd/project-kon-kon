@@ -45,6 +45,11 @@ public class Fireball : MonoBehaviour
             && (entity.baseSpaceEntity.type != SpaceEntityType.Debris) 
             && (validUniversalTarget || rel == FactionFriendliness.Enemy)
         ) {
+            var ai = entity.GetComponent<AIAgent>();
+            if(ai != null && entity.baseSpaceEntity.type == SpaceEntityType.Ship)
+            {
+                ai.Provoke(origin.GetComponent<SpaceEntity>());
+            }
             FindAnyObjectByType<GameManager>().DoDamage(entity, damage);
             Destroy(gameObject);
         }

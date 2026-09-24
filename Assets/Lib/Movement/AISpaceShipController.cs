@@ -31,8 +31,7 @@ public class AISpaceShipController : MonoBehaviour
     {
         if (t == null)
         {
-            movement.thrustInput = 0f;
-            movement.rotationInput = 0f;
+            SetIdle();
             return true;
         }
 
@@ -151,5 +150,11 @@ public class AISpaceShipController : MonoBehaviour
         movement.thrustInput = Mathf.Clamp01(thrust);
 
         return false;
+    }
+
+    public void SetIdle()
+    {
+        movement.thrustInput = 0f;
+        movement.rotationInput = 0f;
     }
 }

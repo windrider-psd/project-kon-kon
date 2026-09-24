@@ -20,17 +20,17 @@ public class AIAgent : MonoBehaviour
         {
             if(priorityOrder == null)
             {
-                return currentOrder;
+                return priorityOrder;
             }
-            return priorityOrder;
+            return currentOrder;
         }
     }
 
-    private AISpaceShipController controller;
+    public AISpaceShipController controller;
 
-    private GameManager manager;
+    public GameManager manager;
 
-    private SpaceEntity entity;
+    public SpaceEntity entity;
     void Start()
     {
         entity = GetComponent<SpaceEntity>();
@@ -46,7 +46,60 @@ public class AIAgent : MonoBehaviour
         {
             majorExecutor.Execute();
         }
+
         ExecuteCurrentOrder();
+       
+        ExecuteProvocationStatus();
+
+
+    }
+
+    public void ExecuteProvocationStatus()
+    {
+
+        if(!isProvoked)
+        {
+            return;
+        }
+
+        else if(priorityOrder != provokedOrder)
+        {
+            isProvoked = false;
+            provokedOrder = null;
+        }
+        else if (provokedOrder.completed)
+        {
+            isProvoked = false;
+        }
+
+        /*
+        if (isProvoked && (provokedOrder.completed || (priorityOrder != null && priorityOrder != provokedOrder)))
+        {
+            isProvoked = false;
+            provokedOrder = null;
+        }*/
+        /*
+        if (priorityOrder != null && priorityOrder.completed)
+        {
+            priorityOrder = null;
+        }
+        if (currentOrder != null && currentOrder.completed)
+        {
+            currentOrder = null;
+        }*/
+    }
+
+    public bool isProvoked = false;
+    private AIOrder provokedOrder;
+    public void Provoke(SpaceEntity origin)
+    {
+        var current = priorityOrder;
+        if (!isProvoked)
+        {
+            provokedOrder = CreateDefendYourself(true);
+            isProvoked = true;
+        }
+        
     }
 
     public void SetMajorOrder(MajorAiOrderType order)
@@ -91,67 +144,68 @@ public class AIAgent : MonoBehaviour
     }
 
 
-    public AIOrder CreateMoveToLocation(Transform location)
+    public AIOrder CreateMoveToLocation(Transform location, bool priority = false)
     {
-        var order = AIOrder.CreateMoveOrder(location);
-        currentOrder = order;
+        var order = new MoveOrder(this, location);
+        if (priority)
+            priorityOrder = order;
+        else
+            currentOrder = order;
         return order;
     }
 
-    public AIOrder CreateDestroy(Transform target)
+    public AIOrder CreateDefendYourself(bool priority = false)
     {
-        var order = AIOrder.CreateDestroyOrder(target);
-        currentOrder = order;
+        var order = new DefendYourselfOrder(this);
+        if (priority)
+            priorityOrder = order;
+        else
+            currentOrder = order;
+        return order;
+    }
+
+    public AIOrder CreateDestroy(Transform target, bool priority = false)
+    {
+        var order = new DestroyOrder(this, target);
+        if (priority)
+            priorityOrder = order;
+        else
+            currentOrder = order;
         return order;
     }
 
 
-    private bool ExecuteCurrentOrder()
+    private void ExecuteCurrentOrder()
     {
-        var order = CurrentPriorityOrder;
-        if (order == null)
-        {
-            return true;
-        }
-        if(order.type == AIOrderType.Move)
-        {
-            return ExecuteMoveOrder(currentOrder);
-        }
-        else if(order.type == AIOrderType.Destroy)
-        {
-            return ExecuteDestroyOrder(currentOrder);
-        }
-        return true;
-    }
+        AIOrder orderToExecute = null;
 
-    private bool ExecuteMoveOrder(AIOrder order)
-    {
-        Transform location = currentOrder.args[0] as Transform;
-
-        var completed = controller.MoveToLocation(location, 2f, true);
-        order.completed = completed;
-        return completed;
-        
-    }
-
-    private bool ExecuteDestroyOrder(AIOrder order)
-    {
-        
-        Transform location = currentOrder.args[0] as Transform;
-        if(location == null)
+        if (priorityOrder != null && priorityOrder.completed)
         {
-            order.completed = true;
-            return true;
+            priorityOrder = null;
         }
 
-        controller.MoveToLocation(location, 2f, false);
-
-        if (IsLookingAtTheTarget(location))
+        if (currentOrder != null && currentOrder.completed)
         {
-            entity.ShootCannonsInRange(order.args[0] as Transform);
+            currentOrder = null;
         }
         
-        return false;
+        if (priorityOrder != null)
+        {
+            orderToExecute = priorityOrder;
+            priorityOrder.Execute();
+
+        }
+        else if (currentOrder != null)
+        {
+            orderToExecute = currentOrder;
+            currentOrder.Execute();
+        }
+        if(orderToExecute != null && entity.baseSpaceEntity.classId == SpaceEntityClassId.BurningFalcon)
+        {
+            
+            Debug.Log(orderToExecute.type);
+            
+        }
     }
 
     public bool IsLookingAtTheTarget(Transform target)
@@ -173,7 +227,9 @@ public class AIAgent : MonoBehaviour
 
     private void SetIdle()
     {
+        this.priorityOrder = null;
         this.currentOrder = null;
+        controller.SetIdle();
     }
 
     private class ExecuteMoveStationsOrder : IMajorOrderExecutor

@@ -28,11 +28,12 @@ public class AsteroidAreaSpawner : MonoBehaviour
     {
         while (true)
         {
-            yield return new WaitForSeconds(spawnTime);
-            if(Asteroids.Length < spawnCount)
+            if (Asteroids.Length < spawnCount)
             {
                 manager.SpawnAsteroidWithinArea(boxCollider);
             }
+            yield return new WaitForSeconds(spawnTime);
+            
         }
         
 

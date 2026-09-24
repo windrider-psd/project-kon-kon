@@ -5,7 +5,7 @@ using System.Text;
 
 public enum AIOrderType
 {
-    Move, Destroy
+    Move, Destroy, DefendYourself
 }
 
 public enum MajorAiOrderType
